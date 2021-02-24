@@ -17,4 +17,8 @@
     <ProjectReference Include="..\EmployeeManager.Models\EmployeeManager.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
