@@ -21,4 +21,18 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\employees\lib\bootstrap\bootstrap.min.css.map" />
+    <None Include="wwwroot\employees\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\employees\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\employees\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\employees\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\employees\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\employees\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\employees\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\employees\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\employees\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\employees\lib\jquery\dist\jquery.min.map" />
+  </ItemGroup>
+
 </Project>
