@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EmployeeManager</title>
-    <link rel="stylesheet" href="~/employees/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/employees/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/employees/css/employee.site.css" />
 </head>
 <body>
@@ -45,6 +45,7 @@
         </div>
     </footer>
     <script src="~/employees/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/employees/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/employees/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
