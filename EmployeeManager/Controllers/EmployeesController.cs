@@ -16,9 +16,31 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Employees.ToListAsync());
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            var employees = from emp in _context.Employees
+                            select emp;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    employees = employees.OrderByDescending(emp => emp.LastName);
+                    break;
+                case "Date":
+                    employees = employees.OrderBy(emp => emp.CreatedAt);
+                    break;
+                case "date_desc":
+                    employees = employees.OrderByDescending(emp => emp.CreatedAt);
+                    break; 
+                default:
+                    employees = employees.OrderByDescending(emp => emp.Id); 
+                    break;
+            }
+
+            return View(await employees.AsNoTracking().ToListAsync());
         }
 
         // GET: Employees/Details/5

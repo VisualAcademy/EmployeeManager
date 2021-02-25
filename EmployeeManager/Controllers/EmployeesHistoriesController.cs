@@ -16,9 +16,35 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: EmployeesHistories
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.EmployeesHistories.ToListAsync());
+        //}
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.EmployeesHistories.ToListAsync());
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            var histories = from h in _context.EmployeesHistories
+                            select h;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    histories = histories.OrderByDescending(h => h.LastName);
+                    break;
+                case "Date":
+                    histories = histories.OrderBy(h => h.CreatedAt);
+                    break;
+                case "date_desc":
+                    histories = histories.OrderByDescending(h => h.CreatedAt);
+                    break;
+                default:
+                    histories = histories.OrderByDescending(h => h.Id);
+                    break;
+            }
+
+            return View(await histories.AsNoTracking().ToListAsync());
         }
 
         // GET: EmployeesHistories/Details/5
