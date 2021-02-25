@@ -20,13 +20,21 @@ namespace EmployeeManager.Controllers
         //{
         //    return View(await _context.EmployeesHistories.ToListAsync());
         //}
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
 
             var histories = from h in _context.EmployeesHistories
                             select h;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                histories = histories.Where(emp => emp.LastName.Contains(searchString)
+                    || emp.FirstName.Contains(searchString)
+                    || emp.Address.Contains(searchString));
+            }
 
             switch (sortOrder)
             {

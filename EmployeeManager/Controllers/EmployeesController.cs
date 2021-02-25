@@ -16,13 +16,21 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString; 
 
             var employees = from emp in _context.Employees
                             select emp;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                employees = employees.Where(emp => emp.LastName.Contains(searchString)
+                    || emp.FirstName.Contains(searchString)
+                    || emp.Address.Contains(searchString));
+            }
 
             switch (sortOrder)
             {
