@@ -16,10 +16,25 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder; 
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter; 
+            }            
+            
             ViewData["CurrentFilter"] = searchString; 
 
             var employees = from emp in _context.Employees
@@ -48,7 +63,12 @@ namespace EmployeeManager.Controllers
                     break;
             }
 
-            return View(await employees.AsNoTracking().ToListAsync());
+            //return View(await employees.AsNoTracking().ToListAsync());
+            int pageSize = 2;
+            return View(await PaginatedList<Employee>.CreateAsync(
+                employees.AsNoTracking(),
+                pageNumber ?? 1,
+                pageSize));
         }
 
         // GET: Employees/Details/5
