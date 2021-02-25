@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\employees\lib\bootstrap\bootstrap.min.css.map" />
     <None Include="wwwroot\employees\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
     <None Include="wwwroot\employees\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
