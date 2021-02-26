@@ -4,8 +4,9 @@ namespace EmployeeManager.Models
 {
     public class EmployeeHistory
     {
-        public long EmployeeId { get; set; }
         public long Id { get; set; }
+
+        public long EmployeeId { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,5 +22,7 @@ namespace EmployeeManager.Models
 
         public bool Active { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public string Remarks { get; set; }
     }
 }

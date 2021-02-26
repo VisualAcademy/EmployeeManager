@@ -48,6 +48,7 @@ namespace EmployeeManager.Controllers
             {
                 histories = histories.Where(emp => emp.LastName.Contains(searchString)
                     || emp.FirstName.Contains(searchString)
+                    || emp.Remarks.Contains(searchString)
                     || emp.Address.Contains(searchString));
             }
 
@@ -104,7 +105,7 @@ namespace EmployeeManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt")] EmployeeHistory employeeHistory)
+        public async Task<IActionResult> Create([Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt,Remarks")] EmployeeHistory employeeHistory)
         {
             if (ModelState.IsValid)
             {
@@ -136,7 +137,7 @@ namespace EmployeeManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt")] EmployeeHistory employeeHistory)
+        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt,Remarks")] EmployeeHistory employeeHistory)
         {
             if (id != employeeHistory.Id)
             {
