@@ -24,7 +24,8 @@ namespace EmployeeManager.Controllers
             string sortOrder,
             string currentFilter,
             string searchString,
-            int? pageNumber)
+            int? pageNumber, 
+            long? employeeId)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -43,6 +44,13 @@ namespace EmployeeManager.Controllers
 
             var histories = from h in _context.EmployeesHistories
                             select h;
+
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                histories = histories.Where(h => h.EmployeeId == employeeId);
+                ViewData["EmployeeId"] = employeeId;
+            }
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -77,15 +85,23 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: EmployeesHistories/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(long? id, long? employeeId)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employeeHistory = await _context.EmployeesHistories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var employeeHistoryQuery = from emp in _context.EmployeesHistories
+                                  select emp;
+
+            if (employeeId != null)
+            {
+                employeeHistoryQuery.Where(emp => emp.EmployeeId == employeeId);
+            }
+
+            var employeeHistory = await employeeHistoryQuery.FirstOrDefaultAsync(m => m.Id == id);
+
             if (employeeHistory == null)
             {
                 return NotFound();
