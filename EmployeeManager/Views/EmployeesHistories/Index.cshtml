@@ -13,7 +13,7 @@
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" 
+            Find by: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"
                             class="form-control-sm" style="width: 150px; display: inline;" />
             <input type="submit" value="Search" class="btn btn-light" /> |
             <a asp-action="Index" asp-route-employeeId="@ViewData["EmployeeId"]">Back to Full List</a>
@@ -25,10 +25,10 @@
     <thead>
         <tr>
             <th>
-                EmployeeId
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Change Date</a>
             </th>
             <th>
-                Remarks
+                EmployeeId
             </th>
             <th>
                 FirstName
@@ -37,37 +37,10 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">LastName</a>
             </th>
             <th>
-                MiddleName
+                Remarks
             </th>
             <th>
-                DOB
-            </th>
-            <th>
-                SSN
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Address
-            </th>
-            <th>
-                City
-            </th>
-            <th>
-                State
-            </th>
-            <th>
-                PostalCode
-            </th>
-            <th>
-                Gender
-            </th>
-            <th>
-                Active
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">CreatedAt</a>
+                Etc(Email, Address, City)
             </th>
             <th></th>
         </tr>
@@ -75,61 +48,38 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MiddleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SSN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Address)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.City)
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -145,5 +95,11 @@
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-    asp-route-employeeId="@ViewData["EmployeeId"]"
+   asp-route-employeeId="@ViewData["EmployeeId"]"
    class="btn btn-light @nextDisabled">Next</a>
+
+<hr />
+
+<div class="container text-right">
+    <input type="button" name="close" value="Close" class="btn btn-danger" onclick="window.close()" />
+</div>

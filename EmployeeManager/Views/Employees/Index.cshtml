@@ -110,7 +110,7 @@
                     @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
                 <td>
-                    <a asp-controller="EmployeesHistories" asp-action="Index" asp-route-EmployeeId="@item.Id">Select</a> |
+                    <a asp-controller="EmployeesHistories" asp-action="Index" asp-route-EmployeeId="@item.Id" target="_blank">Select</a> |
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
