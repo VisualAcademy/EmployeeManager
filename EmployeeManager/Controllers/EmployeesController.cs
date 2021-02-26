@@ -1,6 +1,7 @@
 ﻿using EmployeeManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -106,9 +107,38 @@ namespace EmployeeManager.Controllers
             {
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
+
+                await AddEmployeeHistory(employee);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(employee);
+        }
+
+        /// <summary>
+        /// 변경 내역 남기기 
+        /// </summary>
+        private async Task AddEmployeeHistory(Employee employee)
+        {
+            try
+            {
+                var history = new EmployeeHistory()
+                {
+                    EmployeeId = employee.Id,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Address = employee.Address,
+                    CreatedAt = DateTime.Now,
+                    Email = employee.Email,
+                    Gender = employee.Gender,
+                };
+                _context.Add(history);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+
+            }
         }
 
         // GET: Employees/Edit/5
@@ -157,6 +187,11 @@ namespace EmployeeManager.Controllers
                         throw;
                     }
                 }
+
+
+                await AddEmployeeHistory(employee);
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(employee);
