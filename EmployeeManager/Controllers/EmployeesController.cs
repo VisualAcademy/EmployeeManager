@@ -9,11 +9,11 @@ namespace EmployeeManager.Controllers
 {
     public class EmployeesController : Controller
     {
-        private readonly EmployeeDbContext _context;
+        private readonly EmployeeDbContext _employeeContext;
 
         public EmployeesController(EmployeeDbContext context)
         {
-            _context = context;
+            _employeeContext = context;
         }
 
         // GET: Employees
@@ -38,7 +38,7 @@ namespace EmployeeManager.Controllers
             
             ViewData["CurrentFilter"] = searchString; 
 
-            var employees = from emp in _context.Employees
+            var employees = from emp in _employeeContext.Employees
                             select emp;
 
             if (!string.IsNullOrEmpty(searchString))
@@ -80,7 +80,7 @@ namespace EmployeeManager.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var employee = await _employeeContext.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
@@ -105,8 +105,8 @@ namespace EmployeeManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
-                await _context.SaveChangesAsync();
+                _employeeContext.Add(employee);
+                await _employeeContext.SaveChangesAsync();
 
                 await AddEmployeeHistory(employee);
 
@@ -132,8 +132,8 @@ namespace EmployeeManager.Controllers
                     Email = employee.Email,
                     Gender = employee.Gender,
                 };
-                _context.Add(history);
-                await _context.SaveChangesAsync();
+                _employeeContext.Add(history);
+                await _employeeContext.SaveChangesAsync();
             }
             catch (System.Exception)
             {
@@ -149,7 +149,7 @@ namespace EmployeeManager.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _employeeContext.Employees.FindAsync(id);
             if (employee == null)
             {
                 return NotFound();
@@ -173,8 +173,8 @@ namespace EmployeeManager.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
-                    await _context.SaveChangesAsync();
+                    _employeeContext.Update(employee);
+                    await _employeeContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -205,7 +205,7 @@ namespace EmployeeManager.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var employee = await _employeeContext.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
@@ -220,15 +220,15 @@ namespace EmployeeManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
+            var employee = await _employeeContext.Employees.FindAsync(id);
+            _employeeContext.Employees.Remove(employee);
+            await _employeeContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EmployeeExists(long id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _employeeContext.Employees.Any(e => e.Id == id);
         }
     }
 }
