@@ -111,8 +111,14 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: EmployeesHistories/Create
-        public IActionResult Create()
+        public IActionResult Create(long? employeeId)
         {
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                ViewData["EmployeeId"] = employeeId;
+            }
+
             return View();
         }
 
@@ -121,20 +127,32 @@ namespace EmployeeManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt,Remarks")] EmployeeHistory employeeHistory)
+        public async Task<IActionResult> Create([Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt,Remarks")] EmployeeHistory employeeHistory, long? employeeId)
         {
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                ViewData["EmployeeId"] = employeeId;
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(employeeHistory);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { employeeId = employeeId });
             }
             return View(employeeHistory);
         }
 
         // GET: EmployeesHistories/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(long? id, long? employeeId)
         {
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                ViewData["EmployeeId"] = employeeId;
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -153,8 +171,14 @@ namespace EmployeeManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt,Remarks")] EmployeeHistory employeeHistory)
+        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,Id,FirstName,LastName,MiddleName,DOB,SSN,Email,Address,City,State,PostalCode,Gender,Active,CreatedAt,Remarks")] EmployeeHistory employeeHistory, long? employeeId)
         {
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                ViewData["EmployeeId"] = employeeId;
+            }
+
             if (id != employeeHistory.Id)
             {
                 return NotFound();
@@ -184,8 +208,14 @@ namespace EmployeeManager.Controllers
         }
 
         // GET: EmployeesHistories/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(long? id, long? employeeId)
         {
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                ViewData["EmployeeId"] = employeeId;
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -204,12 +234,18 @@ namespace EmployeeManager.Controllers
         // POST: EmployeesHistories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(long id, long? employeeId)
         {
+            ViewData["EmployeeId"] = "";
+            if (employeeId != null)
+            {
+                ViewData["EmployeeId"] = employeeId;
+            }
+
             var employeeHistory = await _context.EmployeesHistories.FindAsync(id);
             _context.EmployeesHistories.Remove(employeeHistory);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { employeeId = employeeId });
         }
 
         private bool EmployeeHistoryExists(long id)

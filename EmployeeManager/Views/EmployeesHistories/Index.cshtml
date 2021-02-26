@@ -16,7 +16,7 @@
             Find by: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" 
                             class="form-control-sm" style="width: 150px; display: inline;" />
             <input type="submit" value="Search" class="btn btn-light" /> |
-            <a asp-action="Index">Back to Full List</a>
+            <a asp-action="Index" asp-route-employeeId="@ViewData["EmployeeId"]">Back to Full List</a>
         </p>
     </div>
 </form>
@@ -122,9 +122,9 @@
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" asp-route-employeeId="@item.EmployeeId">Delete</a>
             </td>
         </tr>
         }
