@@ -27,6 +27,7 @@ namespace EmployeeManager
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            // DbContext Class
             services.AddDbContext<EmployeeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
